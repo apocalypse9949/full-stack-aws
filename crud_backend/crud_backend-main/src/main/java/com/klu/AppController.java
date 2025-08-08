@@ -4,38 +4,40 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.DeleteMapping;
+//import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin
 public class AppController {
+	@Autowired
+	Service s;
 
-    @Autowired
-    private Service service;
+	@PostMapping("/insert")
+	public String insert(@RequestBody Product p) {
+		return s.insertData(p);
+	}
 
-    @PostMapping("/products")
-    public String insertProduct(@RequestBody Product product) {
-        return service.insertData(product);
-    }
+	@GetMapping("/display")
+	public List<Product> display() {
+		return s.displayData();
+	}
 
-    @GetMapping("/products")
-    public List<Product> getAllProducts() {
-        return service.displayData();
-    }
+	@PutMapping("/update")
+	public String update(@RequestBody Product p) {
+		return s.updateData(p);
+	}
 
-    @PutMapping("/products")
-    public String updateProduct(@RequestBody Product product) {
-        return service.updateData(product);
-    }
-
-    @DeleteMapping("/products/{id}")
-    public String deleteProduct(@PathVariable int id) {
-        return service.deleteData(id);
-    }
+	/* 
+	@DeleteMapping("/delete/{id}")
+	public String delete(@PathVariable int id) {
+		return s.deleteData(id);
+	}
+	*/
+	
 }
